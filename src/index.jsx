@@ -965,6 +965,14 @@ export default class DatePicker extends React.Component {
     );
   };
 
+  ddmmyyyy(value) {
+    let newValue = value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+
+    const dayOrMonth = (index) => index % 2 === 1 && index < 4;
+
+    return newValue.split('').map((v, i) => dayOrMonth(i) ? v + '/' : v).join('');;
+  }
+
   renderDateInput = () => {
     const className = classnames(this.props.className, {
       [outsideClickIgnoreClass]: this.state.open,
@@ -972,7 +980,7 @@ export default class DatePicker extends React.Component {
 
     const customInput = this.props.customInput || <input type="text" />;
     const customInputRef = this.props.customInputRef || "ref";
-    const inputValue =
+    let inputValue =
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
@@ -984,6 +992,8 @@ export default class DatePicker extends React.Component {
             this.props
           )
         : safeDateFormat(this.props.selected, this.props);
+
+    inputValue = this.ddmmyyyy(inputValue).replace(/\/$/, '');
 
     return React.cloneElement(customInput, {
       [customInputRef]: (input) => {
