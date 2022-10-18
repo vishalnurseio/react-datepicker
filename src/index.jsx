@@ -123,7 +123,7 @@ export default class DatePicker extends React.Component {
       excludeScrollbar: true,
       customTimeInput: null,
       calendarStartDay: undefined,
-      needToFormat: true,
+      needToFormatDDMMYYYY: true,
     };
   }
 
@@ -146,7 +146,7 @@ export default class DatePicker extends React.Component {
     customInput: PropTypes.element,
     customInputRef: PropTypes.string,
     calendarStartDay: PropTypes.number,
-    needToFormat: PropTypes.bool,
+    needToFormatDDMMYYYY: PropTypes.bool,
     // eslint-disable-next-line react/no-unused-prop-types
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     dateFormatCalendar: PropTypes.string,
@@ -995,7 +995,7 @@ export default class DatePicker extends React.Component {
           )
         : safeDateFormat(this.props.selected, this.props);
 
-    if (this.props.needToFormat) {
+    if (this.props.needToFormatDDMMYYYY) {
       inputValue = this.ddmmyyyy(inputValue).replace(/\/$/, '');
     }
 
